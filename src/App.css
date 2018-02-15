@@ -1,28 +1,117 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald:400,700');
+@import url('https://use.fontawesome.com/releases/v5.0.6/js/all.js');
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.largeLogo {
+  width: 178px;
+  margin-top: 25vh;
+  border-bottom: rgb(143, 143, 238) 20px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.Home {
+  background-image: url('https://static.pexels.com/photos/280222/pexels-photo-280222.jpeg');
+  background-position: top;
+  height: 100vh;
+  background-size: 100vh;
+  background-repeat: no-repeat;
+  background-color: rgb(10, 88, 167);
 }
 
-.App-title {
-  font-size: 1.5em;
+h1, h2 {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  margin: 20px;
 }
 
-.App-intro {
-  font-size: large;
+h1 {
+  font-size: 5vh;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.headerBottom {
+  border-bottom: rgb(143, 143, 238) 10px solid;
+  width: auto;
+  padding: 2px
+}
+
+.login {
+  height: 50px;
+  width: 200px;
+  margin: 10vh;
+  border-radius: 25px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.logo {
+  width: 40px;
+  margin: 0 10px;
+}
+
+.Header {
+  height: 45px;
+  width: 100%;
+  background-color: rgb(10, 88, 167);
+  border-bottom: rgb(143, 143, 238) 2px solid;
+}
+
+.upperDiv {
+  width: 100vw;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0, 10px;
+}
+
+.title {
+  margin: 0;
+  font-size: 40px;
+}
+
+.menuIcon {
+  height: 35px;
+  margin: 0 10px;
+}
+
+.desktopNav {
+  position: absolute;
+  right: 0px;
+  top: 45px;
+  background: rgb(10, 88, 167);
+}
+
+li {
+  border: rgb(143, 143, 238) 2px solid;
+  border-top: 0px;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  padding: 5px 20px;
+  font-size: 30px;
+}
+
+.link, a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.newSearch {
+  margin: 20px auto;
+}
+
+.aboutText {
+  width: 70vw;
+  margin: 20px auto;
+}
+
+.About {
+  background: linear-gradient(135deg, rgb(232, 232, 238), rgb(111, 111, 214));
+  padding-bottom: 30px;
+}
+
+.aboutLogo {
+  margin-top: 100px;
 }
