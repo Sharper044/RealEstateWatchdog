@@ -1,17 +1,18 @@
 CREATE TABLE rew_users (
 id SERIAL PRIMARY KEY,
-auth0_id TEXT,
+user_id TEXT,
 email TEXT);
 
 CREATE TABLE rew_searches (
 id SERIAL PRIMARY KEY,
-user_id INT REFERENCES rew_users(id),
+user_id TEXT,
 location TEXT,
 ammount INT,
 cash_deal INT,
 move_in INT,
-rate FLOAT(5),
-sort_by INT);
+rate TEXT,
+sort_by INT,
+email INT);
 
 CREATE TABLE rew_properties (
 id SERIAL PRIMARY KEY,

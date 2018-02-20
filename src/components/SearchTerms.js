@@ -8,7 +8,7 @@ class SearchTerms extends Component {
         <input type='text' id='workingLocation' value={this.props.state.workingLocation} onChange={ (event) => this.props.handleChange( event.target.id, event.target.value )}/>
         
         <label htmlFor='workingAmmount'>Cash Ammount for Purchase/Downpayment</label>
-        <input type='text' id='workingAmmount' value={this.props.state.workingAmmount} onChange={ (event) => this.props.handleChange( event.target.id, event.target.value )}/>
+        <div>$<input type='text' id='workingAmmount' value={this.props.state.workingAmmount} onChange={ (event) => this.props.handleChange( event.target.id, event.target.value )}/></div>
         
         <label htmlFor='workingCashDealTog'>Are you purchasing the property in a cash deal?</label>
         <div className='switch'>
@@ -17,7 +17,7 @@ class SearchTerms extends Component {
         </div>
 
         <label htmlFor='workingRate'>What is your anticipated inerest rate? (Anual percent)</label>
-        <input type='text' id='workingRate' value={this.props.state.workingRate} onChange={ (event) => this.props.handleChange( event.target.id, event.target.value )}/>
+        <div><input type='text' id='workingRate' value={this.props.state.workingRate} onChange={ (event) => this.props.handleChange( event.target.id, event.target.value )}/>%</div>
         
         <label htmlFor='workingMoveInTog'>Will you be moving into the home for a time?</label>
         <div className='switch'>

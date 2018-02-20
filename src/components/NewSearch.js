@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUserInfo } from '../ducks/reducer';
+import { getUserInfo, saveSearch } from '../ducks/reducer';
 import Header from './Header';
 import SearchTerms from './SearchTerms';
 import axios from 'axios';
@@ -19,7 +19,6 @@ class NewSearch extends Component {
       workingEmailResults: 0
     };
   
-    this.saveSearch=this.saveSearch.bind(this);
     this.handleChange=this.handleChange.bind(this);
     this.cancel=this.cancel.bind(this);
     this.run=this.run.bind(this);
@@ -43,19 +42,6 @@ class NewSearch extends Component {
         [ name ]: value
       })
     }
-  }
-
-  saveSearch(){
-    //axios.post('/save_search', {
-    console.log({
-      location: this.state.workingLocation,
-      amount: this.state.workingAmmount,
-      cashDeal: this.state.workingCashDealTog,
-      rate: this.state.workingRate,
-      moveIn: this.state.workingMoveInTog,
-      sortBy: this.state.workingSortBy,
-      emailResults: this.state.workingEmailResults
-    })
   }
 
   cancel(){
@@ -90,7 +76,19 @@ class NewSearch extends Component {
           <SearchTerms handleChange={this.handleChange} state={this.state}/>
         </section>
         <div className='buttonHolder'>
-          <button className='searchButton' onClick={ () => this.saveSearch() }>Save</button>
+          <button className='searchButton' onClick={ () => {
+            this.props.saveSearch({
+              user_id: this.props.user,
+              location: this.state.workingLocation,
+              amount: this.state.workingAmmount,
+              cashDeal: this.state.workingCashDealTog,
+              rate: this.state.workingRate,
+              moveIn: this.state.workingMoveInTog,
+              sortBy: this.state.workingSortBy,
+              emailResults: this.state.workingEmailResults
+            })
+            window.location.replace('http://localhost:3000/#/saved_searches')
+          }}>Save</button>
           <button className='searchButton' onClick={ () => this.run() }>Search</button>
           <button className='searchButton' onClick={ () => this.cancel() }>Cancel</button>
         </div>
@@ -101,9 +99,8 @@ class NewSearch extends Component {
 
 function mapStateToProps( state ) {
   return {
-    user: state.user,
-    searches: state.searches
+    user: state.user
   }
 }
 
-export default connect( mapStateToProps, { getUserInfo })( NewSearch );
+export default connect( mapStateToProps, { getUserInfo, saveSearch })( NewSearch );

@@ -9,7 +9,7 @@ class Home extends Component {
         <img className='largeLogo' src={logo} alt='Watchdog'/>
         <h1>Real Estate Watchdog</h1>
         <h2 className='headerBottom'>Your Real Estate Investment Assistant</h2>
-        <a href='http://localhost:3000/#/about'><button className="login">Enter Site</button></a>
+        <a href='http://localhost:3005/auth'><button className="login">Enter Site</button></a>
       </div>
     )
   }

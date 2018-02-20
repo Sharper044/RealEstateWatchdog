@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getUserInfo } from '../ducks/reducer';
 import Header from './Header';
 import logo from '../assets/watchdog.png';
  
 class About extends Component {
-  
+
+  componentDidMount(){
+    this.props.getUserInfo();
+  }
+
   render(){
     return(
       <div className='About'>
@@ -22,4 +28,10 @@ class About extends Component {
   }
 }
 
-export default About
+function mapStateToProps( state ) {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, {getUserInfo})(About);
