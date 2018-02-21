@@ -8,8 +8,12 @@ const initialState = {
 }
 
 const GET_USER_INFO = 'GET_USER_INFO';
-const UPDATE_RESULTS = 'UPDATE_RESULTS';
+const RUN_SEARCH = 'RUN_SEARCH';
 const SAVE_SEARCH = 'SAVE_SEARCH';
+const UPDATE_SEARCH = 'UPDATE_SEARCH';
+const GET_SEARCHES = 'GET_SEARCHES';
+const GET_SEARCH = 'GET_SEARCH';
+const DELETE_SEARCH = 'DELETE_SEARCH';
 
 export function getUserInfo() {
   const userInfo = axios.get('/api/userData').then( res => {
@@ -31,9 +35,50 @@ export function saveSearch( search ){
   }
 }
 
-export function updateResults( data ) {
+export function updateSearch( search ){
+  const saved = axios.put('/api/updateSearch', search).then( res => {
+    return res.data;
+  })
   return {
-    type: UPDATE_RESULTS,
+    type: UPDATE_SEARCH,
+    payload: saved
+  }
+}
+
+export function getSearches( user_id ){
+  const saved = axios.post('/api/getSearches', user_id).then( res => {
+    return res.data;
+  })
+  return {
+    type: GET_SEARCHES,
+    payload: saved
+  }
+}
+
+export function getSearch( search_id ){
+  const saved = axios.post('/api/getSearch', search_id).then( res => {
+    return res.data;
+  })
+  return {
+    type: GET_SEARCH,
+    payload: saved
+  }
+}
+
+export function deleteSearch( search_id ){
+  const saved = axios.delete('/api/deleteSearch', search_id).then( res => {
+    return res.data;
+  })
+  return {
+    type: DELETE_SEARCH,
+    payload: saved
+  }
+}
+
+export function runSearch(current) {
+  const data = axios.put('/search', current) // This needs to have current search passed as a prop to the component and then passed in as current
+  return {
+    type: RUN_SEARCH,
     payload: data
   }
 }
@@ -43,8 +88,16 @@ export default function reducer( state = initialState, action ) {
     case GET_USER_INFO + "_FULFILLED":
       return Object.assign( {}, state, {user: action.payload});
     case SAVE_SEARCH + "_FULFILLED":
-      return Object.assign({}, state, {currentSearch: action.payload})
-    case UPDATE_RESULTS:
+      return Object.assign({}, state, {currentSearch: action.payload});
+    case UPDATE_SEARCH + "_FULFILLED":
+      return Object.assign({}, state, {currentSearch: action.payload});
+    case GET_SEARCHES + "_FULFILLED":
+      return Object.assign({}, state, {serches: action.payload});
+    case DELETE_SEARCH + "_FULFILLED":
+      return Object.assign({}, state, {serches: action.payload});
+    case GET_SEARCH + "_FULFILLED":
+      return Object.assign({}, state, {currentSearch: action.payload});
+    case RUN_SEARCH + "_FULFILLED":
       return Object.assign( {}, state, {results: action.payload});
     default:
       return state;
