@@ -24,7 +24,7 @@ module.exports = {
 
     let s = `SELECT *
     FROM rew_properties
-    WHERE ${locationType} = ${location} AND list_price <= ${listPriceMax};`
+    WHERE ${locationType} = '${location}' AND list_price <= ${listPriceMax};`
 
     // db.get_properties([ location, locationType, listPriceMax ])
     db.query(s)
@@ -44,6 +44,8 @@ module.exports = {
         Promise.all(stack).then( arr => {
           arr.map( (y, i) => {
             properties[i].rZestamate = xmlString.stringSlicer( y.data, '<rentzestimate><amount currency="USD">', '<' );
+
+            if (properties[i].rZestamate !== '>' && properties[i].rZestamate !== '<'){
   
             properties[i].ZillowLink = xmlString.stringSlicer( y.data, '<homedetails>', '<' );
 
@@ -87,9 +89,9 @@ module.exports = {
             }
   
             //put into results array for cash yield if it is in the top 10
-            if ( resultArr[0].length < 10 && !isNaN(properties[i].cashYield)) {
+            if ( resultArr[1].length < 10 && !isNaN(properties[i].cashYield)) {
               resultArr[1].push(properties[i])
-            } else if ( resultArr[0].length == 10 && !isNaN(properties[i].cashYield)) {
+            } else if ( resultArr[1].length == 10 && !isNaN(properties[i].cashYield)) {
               resultArr[1].sort( ( a, b ) => {
                 if ( a.cashYield > b.cashYield ) { return -1 }
                 else if ( a.cashYield < b.cashYield ) { return 1 }
@@ -101,9 +103,9 @@ module.exports = {
             }
   
             //put into results array for cash flow if it is in the top 10
-            if (resultArr[0].length < 10 && !isNaN(properties[i].cashFlow)) {
+            if (resultArr[2].length < 10 && !isNaN(properties[i].cashFlow)) {
               resultArr[2].push(properties[i])
-            } else if (resultArr[0].length == 10 && !isNaN(properties[i].cashFlow)) {
+            } else if (resultArr[2].length == 10 && !isNaN(properties[i].cashFlow)) {
               resultArr[2].sort( ( a, b ) => {
                 if ( a.cashFlow > b.cashFlow ) { return -1 }
                 else if ( a.cashFlow < b.cashFlow ) { return 1 }
@@ -113,9 +115,7 @@ module.exports = {
                 resultArr[2].splice(9, 1, properties[i])
               }
             }
-
-            console.log(resultArr);
-          })
+          }})
           
           resultArr[0].sort( ( a, b ) => {
             if ( a.capRate > b.capRate ) { return -1 }

@@ -59,12 +59,12 @@ class NewSearch extends Component {
   run(){
     axios.put('/search', {
       location: this.state.workingLocation,
-      amount: this.state.workingAmmount,
-      cashDeal: this.state.workingCashDealTog,
+      ammount: this.state.workingAmmount,
+      cash_deal: this.state.workingCashDealTog,
       rate: this.state.workingRate,
-      moveIn: this.state.workingMoveInTog,
-      sortBy: this.state.workingSortBy,
-      emailResults: this.state.workingEmailResults
+      move_in: this.state.workingMoveInTog,
+      sort_by: this.state.workingSortBy,
+      email: this.state.workingEmailResults
     })//add a .then that calls redux with the result and then pushes to the results page. perhaps a loading animation on the button would work well.
   }
 
@@ -80,12 +80,12 @@ class NewSearch extends Component {
             this.props.saveSearch({
               user_id: this.props.user,
               location: this.state.workingLocation,
-              amount: this.state.workingAmmount,
-              cashDeal: this.state.workingCashDealTog,
+              ammount: this.state.workingAmmount,
+              cash_deal: this.state.workingCashDealTog,
               rate: this.state.workingRate,
-              moveIn: this.state.workingMoveInTog,
-              sortBy: this.state.workingSortBy,
-              emailResults: this.state.workingEmailResults
+              move_in: this.state.workingMoveInTog,
+              sort_by: this.state.workingSortBy,
+              email: this.state.workingEmailResults
             })
             window.location.replace('http://localhost:3000/#/saved_searches')
           }}>Save</button>
