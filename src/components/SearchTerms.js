@@ -28,17 +28,17 @@ class SearchTerms extends Component {
         <div>
           Sort results by:
           <label htmlFor='SortBy1'>Cap Rate 
-          <input type='radio' name='workingSortBy' value={0} onChange={ (event) => this.props.handleChange( event.target.name, event.target.value )} checked="checked"/>
+          <input type='radio' name='workingSortBy' value={0} onChange={ (event) => this.props.handleChange( event.target.name, event.target.value )} checked={this.props.state.workingSortBy == 0 ? true : false}/>
           </label>
           <label htmlFor='SortBy1'>Cash Yield 
-          <input type='radio' name='workingSortBy' value={1} onChange={ (event) => this.props.handleChange( event.target.name, event.target.value )}/>
+          <input type='radio' name='workingSortBy' value={1} onChange={ (event) => this.props.handleChange( event.target.name, event.target.value )} checked={this.props.state.workingSortBy == 1 ? true : false}/>
           </label>
           <label htmlFor='SortBy1'>Cash Flow 
-          <input type='radio' name='workingSortBy' value={2} onChange={ (event) => this.props.handleChange( event.target.name, event.target.value )} />
+          <input type='radio' name='workingSortBy' value={2} onChange={ (event) => this.props.handleChange( event.target.name, event.target.value )} checked={this.props.state.workingSortBy == 2 ? true : false}/>
           </label>
         </div>
         
-        <label htmlFor='workingEmailResults'>Do you want an email sent of the results?</label>
+        <label htmlFor='workingEmailResults'>Do you want an automatic bi-weekly email sent of the results? (Must save search for this to take effect.)</label>
         <div className='switch'>
           <input type='checkbox' id='workingEmailResults' checked={this.props.state.workingEmailResults} onChange={ (event) => this.props.handleChange( event.target.id, event.target.value ) }/>
           <span className="slider round"></span>

@@ -7,7 +7,7 @@ module.exports = {
     const db = req.app.get('db');
 
     //unpack the req object.
-    let { location, amount, cashDeal, moveIn, rate } = req.body; 
+    let { location, ammount, cash_deal, move_in, rate } = req.body; 
     
     //correct the formating to be a string all uppercase. for MLS
     //location = location.toUpperCase().replace(/ /g, '%20'); 
@@ -16,7 +16,7 @@ module.exports = {
     let locationType = ( location*1 )?'postal_code':'city';
 
     //calculates the maximum list price depending on wether or not they are moving in and/or paying cash.
-    let listPriceMax = (cashDeal == 1)?(amount):((moveIn == 1)?(Math.ceil(amount/.03)):(Math.ceil(amount/.2)));
+    let listPriceMax = (cash_deal == 1)?(ammount):((move_in == 1)?(Math.ceil(ammount/.03)):(Math.ceil(ammount/.2)));
     
     //create results array. [[top 10 cap rate],[top 10 cash yield],[top 10 cash flow]]
     let resultArr = [[],[],[]];
@@ -55,9 +55,13 @@ module.exports = {
             }
 
             //Calculate mortgage payment and set to property object.
-            if ( cashDeal == 0 ) {
-              properties[i].payment = Math.round(((properties[i].list_price-amount)*((rate*.01/12)*(((rate*.01/12)+1)**360)))/(((1+(rate*.01/12))**360)-1));
+            if ( cash_deal == 0 ) {
+              properties[i].payment = Math.round(((properties[i].list_price-ammount)*((rate*.01/12)*(((rate*.01/12)+1)**360)))/(((1+(rate*.01/12))**360)-1));
             } else {
+              properties[i].payment = 0;
+            }
+
+            if (properties[i].payment < 0) {
               properties[i].payment = 0;
             }
   
@@ -65,15 +69,17 @@ module.exports = {
             properties[i].capRate = precisionRound(properties[i].rZestamate*12/properties[i].list_price, 4);
   
             //Calculate cash yield.
-            if( cashDeal == 0 ) {
-              properties[i].cashYield = precisionRound((properties[i].rZestamate*12*.7)/((properties[i].rZestamate*12*.3)+amount), 2);
+            if( cash_deal == 0 ) {
+              properties[i].cashYield = precisionRound((properties[i].rZestamate*12*.7)/((properties[i].rZestamate*12*.3)+ammount), 2);
             } else {
               properties[i].cashYield = precisionRound((properties[i].rZestamate*12*.7)/((properties[i].rZestamate*12*.3)+properties[i].list_price), 2);
             }
             
             //Calculate cash flow.
             properties[i].cashFlow = precisionRound((properties[i].rZestamate*12*.7)-(properties[i].payment*12), 2);
-  
+            
+            if (properties[i].cashFlow >= 0) {
+
             //put into results array for cap rate if it is in the top 10
             if ( resultArr[0].length < 10 && !isNaN(properties[i].capRate)) {
               resultArr[0].push(properties[i])
@@ -115,6 +121,7 @@ module.exports = {
                 resultArr[2].splice(9, 1, properties[i])
               }
             }
+          }
           }})
           
           resultArr[0].sort( ( a, b ) => {
@@ -198,6 +205,10 @@ module.exports = {
         } else {
           properties[i].payment = 0;
         }
+
+        if (properties[i].payment < 0) {
+          properties[i].payment = 0;
+        }
   
         //Calculate the cap rate.
         properties[i].capRate = precisionRound(properties[i].rZestamate*12/properties[i].list_price, 4);
@@ -212,6 +223,8 @@ module.exports = {
         //Calculate cash flow.
         properties[i].cashFlow = precisionRound((properties[i].rZestamate*12*.7)-(properties[i].payment*12), 2);
   
+        if (properties[i].cashFlow >= 0) {
+
         //put into results array for cap rate if it is in the top 10
         if ( resultArr[0].length < 10 && !isNaN(properties[i].capRate)) {
           resultArr[0].push(properties[i])
@@ -254,6 +267,7 @@ module.exports = {
           }
         }
       }
+    }
     })
         
     resultArr[0].sort( ( a, b ) => {

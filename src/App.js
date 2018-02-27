@@ -4,7 +4,6 @@ import NewSearch from './components/NewSearch';
 import EditSearch from './components/EditSearch';
 import About from './components/About';
 import Home from './components/Home';
-import Loading from './components/Loading';
 import ResultsList from './components/ResultsList';
 import SearchList from './components/SearchList';
 import './reset.css';
@@ -21,7 +20,6 @@ class App extends Component {
             <Route component={ NewSearch } path="/new_search"/>
             <Route component={ EditSearch } path="/edit_search"/>
             <Route component={ SearchList } path="/saved_searches"/>
-            <Route component={ Loading } path="/search"/>
             <Route component={ ResultsList } path="/results"/>
           </Switch>
         </div>

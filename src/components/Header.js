@@ -35,7 +35,6 @@ class Header extends Component {
             <li><Link className='link' to="/about">About</Link></li>
             <li><Link className='link' to="/new_search">New Search</Link></li>
             <li><Link className='link' to="/saved_searches">Saved Searches</Link></li>
-            <li><Link className='link' to="/results">Results</Link></li>
             <li><a href={'http://localhost:3000/#/'}>Logout</a></li>
           </ul>
         </nav>

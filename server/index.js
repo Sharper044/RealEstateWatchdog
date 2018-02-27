@@ -100,7 +100,7 @@ app.put('/api/updateSearch', (req, res)=>{
   db.update_search([user_id, location, ammount, cash_deal, move_in, rate, sort_by, email, search_id])
     .then(search => {
       res.status(200).send(search);
-    })
+    }).catch(console.log)
 });
 
 app.post('/api/getSearches', (req, res) => {
@@ -126,7 +126,6 @@ app.post('/api/getSearch', (req, res) => {
 app.delete('/api/deleteSearch', (req, res) => {
   const db = app.get('db');
   let { search_id, user_id } = req.body;
-
   db.delete_search([search_id, user_id])
     .then(list => {
       res.status(200).send(list);
