@@ -66,13 +66,13 @@ module.exports = {
             }
   
             //Calculate the cap rate.
-            properties[i].capRate = precisionRound(properties[i].rZestamate*12/properties[i].list_price, 4);
+            properties[i].capRate = precisionRound(100*properties[i].rZestamate*12/properties[i].list_price, 4);
   
             //Calculate cash yield.
             if( cash_deal == 0 ) {
-              properties[i].cashYield = precisionRound((properties[i].rZestamate*12*.7)/((properties[i].rZestamate*12*.3)+ammount), 2);
+              properties[i].cashYield = precisionRound(100*(properties[i].rZestamate*12*.7)/((properties[i].rZestamate*12*.3)+ammount), 2);
             } else {
-              properties[i].cashYield = precisionRound((properties[i].rZestamate*12*.7)/((properties[i].rZestamate*12*.3)+properties[i].list_price), 2);
+              properties[i].cashYield = precisionRound(100*(properties[i].rZestamate*12*.7)/((properties[i].rZestamate*12*.3)+properties[i].list_price), 2);
             }
             
             //Calculate cash flow.
@@ -211,13 +211,13 @@ module.exports = {
         }
   
         //Calculate the cap rate.
-        properties[i].capRate = precisionRound(properties[i].rZestamate*12/properties[i].list_price, 4);
+        properties[i].capRate = precisionRound(100*properties[i].rZestamate*12/properties[i].list_price, 4);
   
         //Calculate cash yield.
         if( cash_deal == 0 ) {
-          properties[i].cashYield = precisionRound((properties[i].rZestamate*12*.7)/((properties[i].rZestamate*12*.3)+ammount), 2);
+          properties[i].cashYield = precisionRound(100*(properties[i].rZestamate*12*.7)/((properties[i].rZestamate*12*.3)+ammount), 2);
         } else {
-          properties[i].cashYield = precisionRound((properties[i].rZestamate*12*.7)/((properties[i].rZestamate*12*.3)+properties[i].list_price), 2);
+          properties[i].cashYield = precisionRound(100*(properties[i].rZestamate*12*.7)/((properties[i].rZestamate*12*.3)+properties[i].list_price), 2);
         }
             
         //Calculate cash flow.

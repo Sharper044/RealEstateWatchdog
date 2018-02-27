@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { getUserInfo } from '../ducks/reducer';
 import Header from './Header';
 import ResultItem from './ResultItem';
+import { Bar } from 'react-chartjs-2';
 
 class ResultsList extends Component {
   constructor(props) {
@@ -20,13 +22,44 @@ class ResultsList extends Component {
     })
   }
 
+  sendEmail() {
+    axios.post('/send_email', {
+      sort_by: this.state.workingSortBy,
+      user: this.props.user,
+      results: this.props.results
+    })
+  }
+
   render(){
-    let resultItems = this.props.results.data[this.state.workingSortBy].map((x,i) => <ResultItem key={i} result={x}/>);
+    let resultItems = this.props.results.data[this.state.workingSortBy].map((x,i) => <ResultItem key={i} index={i+1} result={x}/>);
+
+    let numbers = [], labels = [];
+    let strkey = this.state.workingSortBy == 0 ? 'capRate' : this.state.workingSortBy == 1 ? 'cashYield' : 'cashFlow';
+    this.props.results.data[this.state.workingSortBy].map((x,i) => {
+      numbers.push(x[strkey]);
+      labels.push(i+1);
+    });
+
+    let data = {
+      labels: labels,
+      datasets: [
+        {
+          backgroundColor: 'rgba(10, 88, 167,0.2)',
+          borderColor: 'rgba(143, 143, 238,1)',
+          pointBackgroundColor: 'rgba(10, 88, 167,1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(143, 143, 238,1)',
+          data: numbers
+        }
+      ]
+    }
+
     return(
       <div>
         <Header location="Results"/>
         <h5>Your Search Results</h5>
-        <div>Do you want to have these results emailed to you? <button>Yes</button><button>No</button></div>
+        <div>Do you want to have these results emailed to you? <button onClick={() => this.sendEmail()}>Yes</button><button>No</button></div>
         <div>
           Sort by:
           <label htmlFor='SortBy1'>Cap Rate 
@@ -39,7 +72,7 @@ class ResultsList extends Component {
           <input type='radio' name='workingSortBy' value={2} onChange={ (event) => this.handleChange( event.target.name, event.target.value )} checked={this.state.workingSortBy == 2 ? true : false}/>
           </label>
         </div>
-        <div>Chart Div</div>
+        <Bar data={data} />
         <div>
           {resultItems}
         </div>

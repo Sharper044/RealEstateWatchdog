@@ -69,7 +69,7 @@ app.get('/auth/callback', passport.authenticate('auth0', {
 
 app.get('/api/userData', (req, res) => {
   if (!req.user) {
-    res.status(404).send('Please Log In');
+    res.status(404).redirect('http://localhost:3000/#/');
   } else {
     res.status(200).send(req.user);
   }
@@ -143,7 +143,6 @@ new Cron({
         pass: process.env.PASSWORD
       }
     });
-    console.log('hello');
     let db = app.get('db');
     let day = new Date().getDate();
     let stack1 = []
@@ -152,21 +151,18 @@ new Cron({
     for(let i = 0; i < searches.length; i++) {
       let array = await searchControler.emailSearch(searches[i], db)
       resArrays.push(array);
-    };   
-      console.log(resArrays)        
+    };       
       resArrays.forEach( (result, i) => {
-        let sortByStr = searches[i].sort_by == 0 ? 'Cap Rate: ' : searches[i].sort_by == 1 ? 'Cash Yield: $' : 'Cash Flow: $';
-        let sortByKey = searches[i].sort_by == 0 ? 'capRate' : searches[i].sort_by == 1 ? 'cashYield' : 'cashFlow';
+        let sortByStr = searches[i].sort_by == 0 ? `Cap Rate: ${home.capRate}%` : searches[i].sort_by == 1 ? `Cash Yield: ${home.cashFlow}%` : `Cash Flow: $${home.cashFlow}%`;
     
         let str = ''
         result[searches[i].sort_by].forEach(home => {
-          str += `<div><h3>${home.street_number} ${home.street_name} ${home.street_suffix}, ${home.city} ${home.state}, ${home.postal_code} List Price: $${home.list_price} ${sortByStr}${home[sortByKey]}</h3><a href="${home.ZillowLink}"><p>See property on Zillow</p></a></div>`
+          str += `<div><h3>${home.street_number} ${home.street_name} ${home.street_suffix}, ${home.city} ${home.state}, ${home.postal_code} List Price: $${home.list_price} ${sortByStr}</h3><a href="${home.ZillowLink}"><p>See property on Zillow</p></a></div>`
         })
-        console.log(searches[i].email)
         let mailOptions = {
           from: process.env.EMAIL,
           to: searches[i].email,
-          subject: 'test',
+          subject: 'Real Estate Watchdog Bi-Weekly Search Results',
           html: `<a href="http://www.rewatchdog.com"><header><h1>Real Estate Watchdog Bi-Weekly Sniff-Out</h1></header></a><div><p>Greetings from the Real Estate Watchdog! Our faithful watchdog, ever-vigalent, has sniffed out these leads for you in your area of intrest: </p></div><div>${str}</div><p>If you would like to see these in greater detail, feel free to come to <a href="http://www.rewatchdog.com">our site</a> and run this search again. Thank you for using the Real Estate Watchdog</p><footer><a href="http://www.rewatchdog.com">Real Estate Watchdog</a> © 2018 Zillow and the rent Zestamate are property of Zillow.com</footer>`
         }
 
@@ -185,6 +181,44 @@ new Cron({
   },
   start: true,
   timeZone: 'America/Los_Angeles'
+});
+
+app.post('/send_email', async (req, res) => {
+  
+  let db = app.get('db');
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL,
+      pass: process.env.PASSWORD
+    }
+  });
+
+  
+  let str = ''
+  req.body.results.data[req.body.sort_by].forEach(home => {
+
+    let sortByStr = req.body.sort_by == 0 ? `Cap Rate: ${home.capRate}%` : req.body.sort_by == 1 ? `Cash Yield: ${home.cashFlow}%` : `Cash Flow: $${home.cashFlow}%`;
+
+    str += `<div><h3>${home.street_number} ${home.street_name} ${home.street_suffix}, ${home.city} ${home.state}, ${home.postal_code} List Price: $${home.list_price} ${sortByStr}</h3><a href="${home.ZillowLink}"><p>See property on Zillow</p></a></div>`
+  })
+
+  let email = await db.get_email([req.body.user]).then(r => r);
+  console.log(email[0].email);
+  let mailOptions = {
+    from: process.env.EMAIL,
+    to: email[0].email,
+    subject: 'Your Real Estate Watchdog Search Results!',
+    html: `<a href="http://www.rewatchdog.com"><header><h1>Real Estate Watchdog Search Results</h1></header></a><div><p>Greetings from the Real Estate Watchdog! Per your request, here are the results of your search today: </p></div><div>${str}</div><p>If you would like to see these in greater detail, feel free to come to <a href="http://www.rewatchdog.com">our site</a> and run this search again. Thank you for using the Real Estate Watchdog</p><footer><a href="http://www.rewatchdog.com">Real Estate Watchdog</a> © 2018 Zillow and the rent Zestamate are property of Zillow.com</footer>`
+  }
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
 });
 
 
