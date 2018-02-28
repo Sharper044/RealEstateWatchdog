@@ -163,7 +163,7 @@ new Cron({
           from: process.env.EMAIL,
           to: searches[i].email,
           subject: 'Real Estate Watchdog Bi-Weekly Search Results',
-          html: `<a href="http://www.rewatchdog.com"><header><h1>Real Estate Watchdog Bi-Weekly Sniff-Out</h1></header></a><div><p>Greetings from the Real Estate Watchdog! Our faithful watchdog, ever-vigalent, has sniffed out these leads for you in your area of intrest: </p></div><div>${str}</div><p>If you would like to see these in greater detail, feel free to come to <a href="http://www.rewatchdog.com">our site</a> and run this search again. Thank you for using the Real Estate Watchdog</p><footer><a href="http://www.rewatchdog.com">Real Estate Watchdog</a> © 2018 Zillow and the rent Zestamate are property of Zillow.com</footer>`
+          html: `<a href="http://realestate-watchdog.com/"><header><h1>Real Estate Watchdog Bi-Weekly Sniff-Out</h1></header></a><div><p>Greetings from the Real Estate Watchdog! Our faithful watchdog, ever-vigilant, has sniffed out these leads for you in your area of interest: </p></div><div>${str}</div><p>If you would like to see these in greater detail, feel free to come to <a href="http://realestate-watchdog.com/">our site</a> and run this search again. Thank you for using the Real Estate Watchdog</p><footer><a href="http://realestate-watchdog.com/">Real Estate Watchdog</a> © 2018 Zillow and the rent Zestamate are property of Zillow.com</footer>`
         }
 
         transporter.sendMail(mailOptions, function(error, info){
@@ -198,9 +198,9 @@ app.post('/send_email', async (req, res) => {
   let str = ''
   req.body.results.data[req.body.sort_by].forEach(home => {
 
-    let sortByStr = req.body.sort_by == 0 ? `Cap Rate: ${home.capRate}%` : req.body.sort_by == 1 ? `Cash Yield: ${home.cashFlow}%` : `Cash Flow: $${home.cashFlow}%`;
+    let sortByStr = req.body.sort_by == 0 ? `Cap Rate: ${home.capRate}%` : req.body.sort_by == 1 ? `Cash Yield: ${home.cashFlow}%` : `Cash Flow: $${home.cashFlow}`;
 
-    str += `<div><h3>${home.street_number} ${home.street_name} ${home.street_suffix}, ${home.city} ${home.state}, ${home.postal_code} List Price: $${home.list_price} ${sortByStr}</h3><a href="${home.ZillowLink}"><p>See property on Zillow</p></a></div>`
+    str += `<div><h3>${home.street_number} ${home.street_name} ${home.street_suffix}, ${home.city} ${home.state}, ${home.postal_code} List Price: $${home.list_price} ${sortByStr}</h3><a href="${home.ZillowLink}"><p>See more details on ${home.street_number} ${home.street_name} ${home.street_suffix} at Zillow</p></a></div>`
   })
 
   let email = await db.get_email([req.body.user]).then(r => r);
@@ -209,7 +209,7 @@ app.post('/send_email', async (req, res) => {
     from: process.env.EMAIL,
     to: email[0].email,
     subject: 'Your Real Estate Watchdog Search Results!',
-    html: `<a href="http://www.rewatchdog.com"><header><h1>Real Estate Watchdog Search Results</h1></header></a><div><p>Greetings from the Real Estate Watchdog! Per your request, here are the results of your search today: </p></div><div>${str}</div><p>If you would like to see these in greater detail, feel free to come to <a href="http://www.rewatchdog.com">our site</a> and run this search again. Thank you for using the Real Estate Watchdog</p><footer><a href="http://www.rewatchdog.com">Real Estate Watchdog</a> © 2018 Zillow and the rent Zestamate are property of Zillow.com</footer>`
+    html: `<style> header {background-color: rgb(147, 179, 238); width: 100vw;} footer {background-color: rgb(147, 179, 238); width: 100vw;} a {text-decoration: none; color: inherit;}</style> <a href="http://realestate-watchdog.com/"> <header><h1>Real Estate Watchdog Search Results</h1></header></a><div><p>Greetings from the Real Estate Watchdog! Per your request, here are the results of your search today: </p></div><div>${str}</div><p>If you would like to see these in greater detail, feel free to come to <a href="http://realestate-watchdog.com/">our site</a> and run this search again. Thank you for using the Real Estate Watchdog</p><footer><a href="http://realestate-watchdog.com/">Real Estate Watchdog</a> © 2018</footer>`
   }
 
   transporter.sendMail(mailOptions, function(error, info){

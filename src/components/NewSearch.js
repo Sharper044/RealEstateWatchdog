@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getUserInfo, saveSearch, runSearch, currentSearchUpdater } from '../ducks/reducer';
 import Header from './Header';
 import SearchTerms from './SearchTerms';
+import Footer from './Footer';
 
 class NewSearch extends Component {
   constructor( props ) {
@@ -62,7 +63,7 @@ class NewSearch extends Component {
     return(
       <div className='NewSearch'>
         <Header location='New Search'/>
-        <section className='termsHolder'>
+        <section className='termsHolder components'>
           <SearchTerms handleChange={this.handleChange} state={this.state}/>
         </section>
         <div className='buttonHolder'>
@@ -92,8 +93,9 @@ class NewSearch extends Component {
             this.props.currentSearchUpdater(current)
             await this.props.runSearch(current)
             window.location.assign('http://localhost:3000/#/results') }}>Search</button>
-          <button className='searchButton' onClick={ () => this.cancel() }>Reset</button>
+          <button className='searchButton resetButton' onClick={ () => this.cancel() }>Reset</button>
         </div>
+        <Footer/>
       </div>
     )
   }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { getUserInfo } from '../ducks/reducer';
 import Header from './Header';
+import Footer from './Footer';
 import ResultItem from './ResultItem';
 import { Bar } from 'react-chartjs-2';
 
@@ -10,10 +11,20 @@ class ResultsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      workingSortBy: this.props.currentSearch[0].sort_by || 0
+      workingSortBy: this.props.currentSearch[0].sort_by || 0,
+      display: 'block'
     }
 
+    this.handleClick=this.handleClick.bind(this);
     this.handleChange=this.handleChange.bind(this);
+  }
+
+  handleClick() {
+    if (this.state.display === "none") {
+      this.setState({ display:"block" });
+    } else {
+      this.setState({ display:"none" });
+    }
   }
   
   handleChange( name, value ) {
@@ -35,6 +46,7 @@ class ResultsList extends Component {
 
     let numbers = [], labels = [];
     let strkey = this.state.workingSortBy == 0 ? 'capRate' : this.state.workingSortBy == 1 ? 'cashYield' : 'cashFlow';
+    let strLabel = this.state.workingSortBy == 0 ? 'Cap Rate %' : this.state.workingSortBy == 1 ? 'Cash Yield %' : 'Cash Flow $';
     this.props.results.data[this.state.workingSortBy].map((x,i) => {
       numbers.push(x[strkey]);
       labels.push(i+1);
@@ -44,38 +56,39 @@ class ResultsList extends Component {
       labels: labels,
       datasets: [
         {
-          backgroundColor: 'rgba(10, 88, 167,0.2)',
-          borderColor: 'rgba(143, 143, 238,1)',
-          pointBackgroundColor: 'rgba(10, 88, 167,1)',
+          label: strLabel,
+          backgroundColor: 'rgba(147, 179, 238,.8)',
+          borderColor: 'rgba(147, 179, 238, 1)',
+          pointBackgroundColor: 'rgba(147, 179, 238,1)',
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(143, 143, 238,1)',
+          pointHoverBorderColor: 'rgba(147, 179, 238,1)',
           data: numbers
         }
       ]
     }
 
     return(
-      <div>
+      <div className='ResultsList'>
         <Header location="Results"/>
-        <h5>Your Search Results</h5>
-        <div>Do you want to have these results emailed to you? <button onClick={() => this.sendEmail()}>Yes</button><button>No</button></div>
-        <div>
+        <h5 className='resultsHead'>Your Search Results</h5>
+        <div className='autoEmail' style={{display:this.state.display}} ><div>Do you want to have these results emailed to you?</div> <button className='searchButton' onClick={() => this.sendEmail()}>Yes</button><button className='searchButton' onClick={() => this.handleClick()}>No</button></div>
+        <div className='resSortBy'>
           Sort by:
-          <label htmlFor='SortBy1'>Cap Rate 
-          <input type='radio' name='workingSortBy' value={0} onChange={ (event) => this.handleChange( event.target.name, event.target.value )} checked={this.state.workingSortBy == 0 ? true : false}/>
-          </label>
-          <label htmlFor='SortBy1'>Cash Yield 
-          <input type='radio' name='workingSortBy' value={1} onChange={ (event) => this.handleChange( event.target.name, event.target.value )} checked={this.state.workingSortBy == 1 ? true : false}/>
-          </label>
-          <label htmlFor='SortBy1'>Cash Flow 
-          <input type='radio' name='workingSortBy' value={2} onChange={ (event) => this.handleChange( event.target.name, event.target.value )} checked={this.state.workingSortBy == 2 ? true : false}/>
-          </label>
+          <label htmlFor='SortBy1'> 
+          <input type='radio' name='workingSortBy' value={0} onChange={ (event) => this.handleChange( event.target.name, event.target.value )} checked={this.state.workingSortBy == 0 ? true : false}/>  Cap Rate</label>
+          <label htmlFor='SortBy1'>
+          <input type='radio' name='workingSortBy' value={1} onChange={ (event) => this.handleChange( event.target.name, event.target.value )} checked={this.state.workingSortBy == 1 ? true : false}/> Cash Yield</label>
+          <label htmlFor='SortBy1'>
+          <input type='radio' name='workingSortBy' value={2} onChange={ (event) => this.handleChange( event.target.name, event.target.value )} checked={this.state.workingSortBy == 2 ? true : false}/> Cash Flow</label>
         </div>
-        <Bar data={data} />
+        <Bar data={data}/>
+        <p>Select a property to see more details:</p>
         <div>
           {resultItems}
         </div>
+        <p className='footnote'>The above stats are calculated on a 30% operating cost assumption.</p>
+        <Footer/>
       </div>
     )
   }

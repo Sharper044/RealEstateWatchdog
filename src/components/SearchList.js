@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUserInfo, getSearches } from '../ducks/reducer';
+import { Link } from 'react-router-dom';
 import Header from './Header';
+import Footer from './Footer';
 import SavedSearch from './SavedSearch';
 
 class SearchList extends Component {
@@ -22,11 +24,13 @@ class SearchList extends Component {
   render(){
     let searchItems = this.props.searches.map((x, i) => <SavedSearch key={i} search={x} user={this.props.user}/>)
     return(
-      <div>
+      <div className='searchList'>
         <Header location='Saved Searches'/>
-        <section>
+        <section className='components'>
           {searchItems}
         </section>
+        <Link to='/new_search'><button className='login newSearch'>New Search</button></Link>
+        <Footer/>
       </div>
     )
   }

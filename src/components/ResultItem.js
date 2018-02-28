@@ -1,21 +1,48 @@
-import React from 'react'
+import React, {Component} from 'react'
 
-export default function ResultItem(props) {
-  return(
-    <div>
-      <div>
-        <h4>{props.index}. {props.result.street_number} {props.result.street_name} {props.result.street_suffix}, {props.result.city} {props.result.state}, {props.result.postal_code} List Price: ${props.result.list_price}</h4>
+class ResultItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      display: 'none'
+    };
+
+    this.handleClick=this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    if (this.state.display === "none") {
+      this.setState({ display:"block" });
+    } else {
+      this.setState({ display:"none" });
+    }
+  }
+
+  render() {
+    return(
+      <div className='ResultItem' onClick={() => this.handleClick()}>
+        <div className='resultHead'>
+          <h4> {this.props.index}. {this.props.result.street_number} {this.props.result.street_name} {this.props.result.street_suffix}</h4>
+          <h4>{this.props.result.city} {this.props.result.state}, {this.props.result.postal_code}</h4>
+          <h4>List Price: ${this.props.result.list_price}</h4>
+        </div>
+        
+        <div style={{display:this.state.display}}>
+          <h5>Details:</h5>
+          <div className='resultDetails'>
+            <p>Monthly Payment: ${this.props.result.payment}</p>
+            <p>Rent Zestamate: ${this.props.result.rZestamate}</p>
+            <p>Cap Rate: {this.props.result.capRate}%</p>
+            <p>Cash Yield: {this.props.result.cashYield}%</p>
+            <p>Annual Cash Flow: ${this.props.result.cashFlow}</p>
+            <a className='Zillow' href={this.props.result.ZillowLink}><p>See more details for {this.props.result.street_number} {this.props.result.street_name} {this.props.result.street_suffix} on Zillow</p></a>
+            <a href='http://www.zillow.com/'><img className='zillowLogo' src={require('../assets/Zillowlogo_200x50.gif')} alt="Real Estate on Zillow"/></a>
+          </div>
+        </div>
       </div>
-      <div>
-        <h5>Details</h5>
-        <p>Monthly Payment: ${props.result.payment}</p>
-        <p>Rent Zestamate: ${props.result.payment}</p>
-        <p>Cap Rate: {props.result.capRate}%</p>
-        <p>Cash Yield: {props.result.cashYield}%</p>
-        <p>Anual Cash Flow: ${props.result.cashFlow}</p>
-        <p>The above stats are calculated on a 30% opperating cost assumption.</p>
-        <a href={props.result.ZillowLink}><p>See property on Zillow</p></a>
-      </div>
-    </div>
-  )
+    )
+  }
 }
+
+export default ResultItem

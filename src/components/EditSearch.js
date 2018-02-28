@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { getUserInfo, updateSearch, runSearch } from '../ducks/reducer';
 import SearchTerms from './SearchTerms';
 import Header from './Header';
+import Footer from './Footer';
 
 class EditSearch extends Component {
   constructor( props ) {
@@ -65,7 +66,7 @@ class EditSearch extends Component {
     return(
       <div className='NewSearch'>
         <Header location='Edit Search'/>
-        <section className='termsHolder'>
+        <section className='termsHolder components'>
           <SearchTerms handleChange={this.handleChange} state={this.state}/>
         </section>
         <div className='buttonHolder'>
@@ -96,8 +97,9 @@ class EditSearch extends Component {
             window.location.assign('http://localhost:3000/#/results')
           }}>Search</button>
           <button className='searchButton' onClick={ () => this.cancel() }>Reset</button>
-          <Link to="/saved_searches"><button>Back To Saved Searches</button></Link>
+          <Link to="/saved_searches"><button className='searchButton backButton'>Back To Saved Searches</button></Link>
         </div>
+        <Footer/>
       </div>
     )
   }

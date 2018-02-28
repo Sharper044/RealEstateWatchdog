@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/watchdog.png';
 import menu from '../assets/menu.png';
+const ClickOutHandler = require('react-onclickout');
 
 class Header extends Component {
   constructor( props ) {
@@ -12,6 +13,7 @@ class Header extends Component {
     };
   
     this.handleClick=this.handleClick.bind(this);
+    this.onClickOut = this.onClickOut.bind(this);
   }
 
   handleClick() {
@@ -21,12 +23,17 @@ class Header extends Component {
       this.setState({ display:"none" });
     }
   }
+
+  onClickOut(e) {
+    this.setState({ display:"none" });
+  }
   
   render(){
     return(
+      <ClickOutHandler onClickOut={this.onClickOut}>
       <div className='Header'>
         <div className='upperDiv'>
-          <img className="logo" src={ logo } alt='Real Estate Watchdog'/>
+        <Link className='link' to="/about"><img className="logo" src={ logo } alt='Real Estate Watchdog'/></Link>
           <h2 className='title'>{ this.props.location }</h2>
           <img className="menuIcon" src={ menu } alt='menu' onClick={() => this.handleClick()}/>
         </div>
@@ -39,6 +46,7 @@ class Header extends Component {
           </ul>
         </nav>
       </div>
+      </ClickOutHandler>
     )
   }
 }
