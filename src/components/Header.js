@@ -4,6 +4,7 @@ import logo from '../assets/watchdog.png';
 import menu from '../assets/menu.png';
 const ClickOutHandler = require('react-onclickout');
 
+
 class Header extends Component {
   constructor( props ) {
     super( props );
@@ -40,7 +41,7 @@ class Header extends Component {
             <Link className='link hidden' to="/about">About</Link> | 
             <Link className='link hidden' to="/new_search">New Search</Link> | 
             <Link className='link hidden' to="/saved_searches">Saved Searches</Link> |
-            <a className='hidden' href={'https://real-estate-watchdog.auth0.com/v2/logout?returnTo=http://localhost:3000/#/'}>Logout</a>
+            <a className='hidden' href={process.env.REACT_APP_LOGOUT}>Logout</a>
           </div>
         </div>
         <nav className='desktopNav' id='nav' style={{display:this.state.display}}>
@@ -48,7 +49,7 @@ class Header extends Component {
             <li><Link className='link' to="/about">About</Link></li>
             <li><Link className='link' to="/new_search">New Search</Link></li>
             <li><Link className='link' to="/saved_searches">Saved Searches</Link></li>
-            <li><a href={'https://real-estate-watchdog.auth0.com/v2/logout?returnTo=http://localhost:3000/#/'}>Logout</a></li>
+            <li><a href={process.env.REACT_APP_LOGOUT}>Logout</a></li>
           </ul>
         </nav>
       </div>

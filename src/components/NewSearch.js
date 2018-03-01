@@ -78,7 +78,7 @@ class NewSearch extends Component {
               sort_by: this.state.workingSortBy,
               email: this.state.workingEmailResults
             })
-            window.location.replace('http://localhost:3000/#/saved_searches')
+            window.location.replace(process.env.REACT_APP_SAVED_SEARCHES)
           }}>Save</button>
           <button className='searchButton' onClick={ async () => {
             let current = {
@@ -92,7 +92,7 @@ class NewSearch extends Component {
             }
             this.props.currentSearchUpdater(current)
             await this.props.runSearch(current)
-            window.location.assign('http://localhost:3000/#/results') }}>Search</button>
+            window.location.assign(process.env.REACT_APP_RESULTS) }}>Search</button>
           <button className='searchButton resetButton' onClick={ () => this.cancel() }>Reset</button>
         </div>
         <Footer/>

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { deleteSearch, getSearch, runSearch, currentSearchUpdater } from '../ducks/reducer';
 
+
 function SavedSearch(props) {
   let loanDetails = <div></div>;
 
@@ -33,11 +34,11 @@ function SavedSearch(props) {
           }
           props.currentSearchUpdater(current)
           await props.runSearch(current)
-          window.location.assign('http://localhost:3000/#/results')
+          window.location.assign(process.env.REACT_APP_RESULTS)
           }}>Run Search</button>
         <button className='savedButton' id="b2" onClick={async () => {
           await props.getSearch({search_id: props.search.id}).then(r => r)
-          window.location.assign('http://localhost:3000/#/edit_search')
+          window.location.assign(process.env.REACT_APP_EDIT_SEARCH)
           }}>Edit Search</button>
         <button className='savedButton' id="b3" onClick={() => props.deleteSearch({search_id: props.search.id, user_id: props.user})}>Delete Search</button>
       </div>

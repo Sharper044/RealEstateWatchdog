@@ -63,13 +63,13 @@ passport.deserializeUser((user, done) => {
 app.get('/auth', passport.authenticate('auth0'));
 
 app.get('/auth/callback', passport.authenticate('auth0', {
-  successRedirect: 'http://localhost:3000/#/about',
-  failureRedirect: 'http://localhost:3000/#/'
+  successRedirect: process.env.SUCCESS_REDIRECT,
+  failureRedirect: process.env.FAILURE_REDIRECT
 }))
 
 app.get('/api/userData', (req, res) => {
   if (!req.user) {
-    res.status(404).redirect('http://localhost:3000/#/');
+    res.status(404).redirect(process.env.FAILURE_REDIRECT);
   } else {
     res.status(200).send(req.user);
   }

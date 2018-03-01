@@ -5,7 +5,6 @@ import store from './store';
 import App from './App';
 import './reset.css';
 import './index.css';
-require('dotenv').config();
 
 
 ReactDOM.render(
