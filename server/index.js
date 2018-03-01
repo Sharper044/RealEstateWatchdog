@@ -75,11 +75,6 @@ app.get('/api/userData', (req, res) => {
   }
 })
 
-app.get('/auth/logout', (req, res) => {
-  req.logOut();
-  return res.redirect('http://localhost:3000/#/');
-})
-
 //prototype search endpoint used to test search function
 app.put('/search', searchControler.search );
 

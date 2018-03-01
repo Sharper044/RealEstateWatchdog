@@ -82,12 +82,12 @@ h1 {
 
 .title {
   margin: 0;
-  font-size: 38px;
+  font-size: 36px;
 }
 
 .menuIcon {
   height: 35px;
-  margin: 0 10px;
+  margin: 0 20px;
 }
 
 .desktopNav {
@@ -129,10 +129,14 @@ li {
 
 .aboutText {
   width: 70vw;
-  margin: 20px auto;
+  margin: 30px auto;
   font-size: 16px;
   text-align: left;
   text-indent: 25px;
+}
+
+.aboutEnd{
+  padding-bottom: 60px;
 }
 
 .About {
@@ -296,6 +300,7 @@ input[type='radio']{
   border-radius: 15px;
   padding: 10px;
   font-family: 'Oswald', sans-serif;
+  max-width: 600px;
 }
 
 .savedSearchButtons {
@@ -392,4 +397,36 @@ input[type='radio']{
 .zillowLogo {
   border-radius: 10px;
   margin-top: 10px;
+}
+
+.hiddenMenu {
+  display: none;
+}
+
+@media screen and (min-width: 1092px) {
+  .menuIcon {
+    display: none;
+  }
+
+  .hiddenMenu {
+    display: flex;
+    font-size: 20px;
+    font-family: 'Oswald', sans-serif;
+    margin-right: 20px;
+    justify-self: end;
+  }
+
+  .link {
+    justify-self: start;
+  }
+
+  .hidden {
+    margin: 0 5px;
+  }
+
+  .upperDiv {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
 }

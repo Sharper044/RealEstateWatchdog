@@ -33,16 +33,22 @@ class Header extends Component {
       <ClickOutHandler onClickOut={this.onClickOut}>
       <div className='Header'>
         <div className='upperDiv'>
-        <Link className='link' to="/about"><img className="logo" src={ logo } alt='Real Estate Watchdog'/></Link>
+          <Link className='link' to="/about"><img className="logo" src={ logo } alt='Real Estate Watchdog'/></Link>
           <h2 className='title'>{ this.props.location }</h2>
           <img className="menuIcon" src={ menu } alt='menu' onClick={() => this.handleClick()}/>
+          <div className='hiddenMenu'>
+            <Link className='link hidden' to="/about">About</Link> | 
+            <Link className='link hidden' to="/new_search">New Search</Link> | 
+            <Link className='link hidden' to="/saved_searches">Saved Searches</Link> |
+            <a className='hidden' href={'https://real-estate-watchdog.auth0.com/v2/logout?returnTo=http://localhost:3000/#/'}>Logout</a>
+          </div>
         </div>
         <nav className='desktopNav' id='nav' style={{display:this.state.display}}>
           <ul className='menu'>
             <li><Link className='link' to="/about">About</Link></li>
             <li><Link className='link' to="/new_search">New Search</Link></li>
             <li><Link className='link' to="/saved_searches">Saved Searches</Link></li>
-            <li><a href={'http://localhost:3000/#/'}>Logout</a></li>
+            <li><a href={'https://real-estate-watchdog.auth0.com/v2/logout?returnTo=http://localhost:3000/#/'}>Logout</a></li>
           </ul>
         </nav>
       </div>
@@ -51,4 +57,4 @@ class Header extends Component {
   }
 }
 
-export default Header
+export default Header;

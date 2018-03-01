@@ -26,7 +26,7 @@ class SearchList extends Component {
     return(
       <div className='searchList'>
         <Header location='Saved Searches'/>
-        <section className='components'>
+        <section className='components searchItems'>
           {searchItems}
         </section>
         <Link to='/new_search'><button className='login newSearch'>New Search</button></Link>

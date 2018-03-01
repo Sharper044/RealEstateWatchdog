@@ -20,6 +20,7 @@ export function getUserInfo() {
   const userInfo = axios.get('/api/userData').then( res => {
     return res.data;
   })
+  console.log(userInfo);
   return {
     type: GET_USER_INFO,
     payload: userInfo
