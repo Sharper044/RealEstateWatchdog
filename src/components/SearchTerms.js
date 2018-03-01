@@ -12,8 +12,8 @@ class SearchTerms extends Component {
         
         <label htmlFor='workingCashDealTog'>Are you purchasing the property in a cash deal?</label>
         <div className='switch'>
-          <input type='checkbox' id='workingCashDealTog' checked={this.props.state.workingCashDealTog} onChange={ (event) => this.props.handleChange( event.target.id, event.target.value )}/>
-          <span className="slider round"></span>
+          <input type='checkbox' id='workingCashDealTog' checked={this.props.state.workingCashDealTog}/>
+          <span className="slider round" onClick={() => this.props.handleClick('workingCashDealTog')}></span>
         </div>
 
         <div className='loanItems' style={this.props.state.workingCashDealTog == 1 ? {display:"none"} : {display:"flex"}}>
@@ -22,8 +22,8 @@ class SearchTerms extends Component {
         
           <label htmlFor='workingMoveInTog'>Will you be moving into the home for a time?</label>
           <div className='switch'>
-            <input type='checkbox' id='workingMoveInTog' checked={this.props.state.workingMoveInTog} onChange={ (event) => this.props.handleChange( event.target.id, event.target.value )}/>
-            <span className="slider round"></span>
+            <input type='checkbox' id='workingMoveInTog' checked={this.props.state.workingMoveInTog}/>
+            <span className="slider round" onClick={() => this.props.handleClick('workingMoveInTog')}></span>
           </div>
         </div>
 
@@ -42,8 +42,8 @@ class SearchTerms extends Component {
         
         <label htmlFor='workingEmailResults'>Automatic bi-weekly email of current results? (Must save search to take effect.)</label>
         <div className='switch'>
-          <input type='checkbox' id='workingEmailResults' checked={this.props.state.workingEmailResults} onChange={ (event) => this.props.handleChange( event.target.id, event.target.value ) }/>
-          <span className="slider round"></span>
+          <input type='checkbox' id='workingEmailResults' checked={this.props.state.workingEmailResults}/>
+          <span className="slider round" onClick={() => this.props.handleClick('workingEmailResults')}></span>
         </div>
 
       </div>

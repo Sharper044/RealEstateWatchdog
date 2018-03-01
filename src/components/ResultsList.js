@@ -72,7 +72,10 @@ class ResultsList extends Component {
       <div className='ResultsList'>
         <Header location="Results"/>
         <h5 className='resultsHead'>Your Search Results</h5>
-        <div className='autoEmail' style={{display:this.state.display}} ><div>Do you want to have these results emailed to you?</div> <button className='searchButton' onClick={() => this.sendEmail()}>Yes</button><button className='searchButton' onClick={() => this.handleClick()}>No</button></div>
+        <div className='autoEmail' style={{display:this.state.display}} ><div>Do you want to have these results emailed to you?</div> <button className='searchButton' onClick={() => {
+          this.sendEmail()
+          this.handleClick()
+        }}>Yes</button><button className='searchButton' onClick={() => this.handleClick()}>No</button></div>
         <div className='resSortBy'>
           Sort by:
           <label htmlFor='SortBy1'> 

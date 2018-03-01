@@ -36,8 +36,8 @@ class ResultItem extends Component {
             <p>Cap Rate: {this.props.result.capRate}%</p>
             <p>Cash Yield: {this.props.result.cashYield}%</p>
             <p>Annual Cash Flow: ${this.props.result.cashFlow}</p>
-            <a className='Zillow' href={this.props.result.ZillowLink}><p>See more details for {this.props.result.street_number} {this.props.result.street_name} {this.props.result.street_suffix} on Zillow</p></a>
-            <a href='http://www.zillow.com/'><img className='zillowLogo' src={require('../assets/Zillowlogo_200x50.gif')} alt="Real Estate on Zillow"/></a>
+            <a target="_blank" className='Zillow' href={this.props.result.ZillowLink}><p>See more details for {this.props.result.street_number} {this.props.result.street_name} {this.props.result.street_suffix} on Zillow</p></a>
+            <a target="_blank" href='http://www.zillow.com/'><img className='zillowLogo' src={require('../assets/Zillowlogo_200x50.gif')} alt="Real Estate on Zillow"/></a>
           </div>
         </div>
       </div>

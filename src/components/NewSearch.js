@@ -20,6 +20,7 @@ class NewSearch extends Component {
     };
   
     this.handleChange=this.handleChange.bind(this);
+    this.handleClick=this.handleClick.bind(this);
     this.cancel=this.cancel.bind(this);
   }
 
@@ -27,24 +28,23 @@ class NewSearch extends Component {
     this.props.getUserInfo();
   }
 
-  handleChange( name, value ) {
-    if( name === 'workingMoveInTog' || name === 'workingCashDealTog' || name === 'workingEmailResults' ) {
-      if ( this.state[name] === 0 ){
-        this.setState({
-          [ name ]: 1
-        })
-      }
-      else {
-        this.setState({
-          [ name ]: 0
-        })
-      }
-    }
-    else{
+  handleClick( name ) {
+    if ( this.state[name] === 0 ){
       this.setState({
-        [ name ]: value
+        [ name ]: 1
       })
     }
+    else {
+      this.setState({
+        [ name ]: 0
+      })
+    }
+  }
+
+  handleChange( name, value ) {
+    this.setState({
+      [ name ]: value
+    })
   }
 
   cancel(){
@@ -64,7 +64,7 @@ class NewSearch extends Component {
       <div className='NewSearch'>
         <Header location='New Search'/>
         <section className='termsHolder components'>
-          <SearchTerms handleChange={this.handleChange} state={this.state}/>
+          <SearchTerms handleChange={this.handleChange} state={this.state} handleClick={this.handleClick}/>
         </section>
         <div className='buttonHolder'>
           <button className='searchButton' onClick={ async () => {
