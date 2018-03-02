@@ -4,7 +4,7 @@ class SearchTerms extends Component {
   render(){
     return(
       <div className='SearchTerms'>
-        <label htmlFor='workingLocation'>City or Zip Code</label>
+        <label htmlFor='workingLocation'>City or Zip Code [Demo Mode: only '84770', '84790', and 'Saint George' work]</label>
         <input type='text' id='workingLocation' value={this.props.state.workingLocation} onChange={ (event) => this.props.handleChange( event.target.id, event.target.value )}/>
         
         <label htmlFor='workingAmmount'>Cash Amount for Purchase/Down-payment</label>
